@@ -85,12 +85,30 @@ WSGI_APPLICATION = 'leafcure_backend.wsgi.application'
 
 # Database
 # Default: SQLite for simplicity, portability, and zero-setup deployment
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / os.environ.get('DATABASE_NAME', 'db.sqlite3'),
+if os.environ.get('VERCEL'):
+    import shutil
+    tmp_dir = Path('/tmp')
+    tmp_dir.mkdir(parents=True, exist_ok=True)
+    tmp_db = tmp_dir / 'db.sqlite3'
+    seed_db = BASE_DIR / 'seed_db.sqlite3'
+    if not tmp_db.exists() and seed_db.exists():
+        try:
+            shutil.copyfile(seed_db, tmp_db)
+        except Exception:
+            pass
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': str(tmp_db),
+        }
     }
-}
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / os.environ.get('DATABASE_NAME', 'db.sqlite3'),
+        }
+    }
 
 # Password validation
 AUTH_PASSWORD_VALIDATORS = [
@@ -123,7 +141,11 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 
 # Media files (Uploaded Leaf scans, user profiles)
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+if os.environ.get('VERCEL'):
+    MEDIA_ROOT = '/tmp/media'
+    os.makedirs(MEDIA_ROOT, exist_ok=True)
+else:
+    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
