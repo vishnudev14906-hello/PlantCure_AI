@@ -1,0 +1,16 @@
+﻿{
+  "rewrites": [
+    {
+      "source": "/api/(.*)",
+      "destination": "https://plantcure-ai.vercel.app/api/$1"
+    },
+    {
+      "source": "/media/(.*)",
+      "destination": "https://plantcure-ai.vercel.app/media/$1"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ]
+}
