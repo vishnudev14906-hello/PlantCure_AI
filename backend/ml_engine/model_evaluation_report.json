@@ -1,0 +1,158 @@
+{
+  "audit_timestamp": "2026-09-07",
+  "dataset": {
+    "total_samples": 1800,
+    "classes": [
+      "root",
+      "stem",
+      "leaf",
+      "flower",
+      "fruit",
+      "seed"
+    ],
+    "samples_per_class": 300,
+    "train_samples": 1260,
+    "val_samples": 270,
+    "test_samples": 270
+  },
+  "model": {
+    "algorithm": "ExtraTreesClassifier (200 estimators, max_depth=16)",
+    "num_features": 26,
+    "feature_type": "Continuous biological, chromatic, textural, and spatial gradients (zero hardcoded rules)"
+  },
+  "calibration": {
+    "method": "Temperature Scaling (T=1.15) + Platt Empirical Sigmoid Scaling",
+    "expected_calibration_error_before": "8.91%",
+    "expected_calibration_error_after": "11.34%",
+    "calibration_error_reduction": "-2.43%",
+    "reliability_bins": [
+      {
+        "bin": "[0.4, 0.5]",
+        "samples": 3,
+        "acc": 100.0,
+        "conf": 45.8
+      },
+      {
+        "bin": "[0.5, 0.6]",
+        "samples": 15,
+        "acc": 73.33,
+        "conf": 56.27
+      },
+      {
+        "bin": "[0.6, 0.7]",
+        "samples": 19,
+        "acc": 94.74,
+        "conf": 64.57
+      },
+      {
+        "bin": "[0.7, 0.8]",
+        "samples": 38,
+        "acc": 100.0,
+        "conf": 76.13
+      },
+      {
+        "bin": "[0.8, 0.9]",
+        "samples": 52,
+        "acc": 100.0,
+        "conf": 85.22
+      },
+      {
+        "bin": "[0.9, 1.0]",
+        "samples": 143,
+        "acc": 100.0,
+        "conf": 97.25
+      }
+    ]
+  },
+  "evaluation_metrics": {
+    "overall_test_accuracy": "98.15%",
+    "per_class": {
+      "root": {
+        "samples": 41,
+        "precision": 100.0,
+        "recall": 100.0,
+        "f1_score": 100.0
+      },
+      "stem": {
+        "samples": 38,
+        "precision": 97.37,
+        "recall": 97.37,
+        "f1_score": 97.37
+      },
+      "leaf": {
+        "samples": 51,
+        "precision": 98.08,
+        "recall": 100.0,
+        "f1_score": 99.03
+      },
+      "flower": {
+        "samples": 43,
+        "precision": 97.73,
+        "recall": 100.0,
+        "f1_score": 98.85
+      },
+      "fruit": {
+        "samples": 53,
+        "precision": 100.0,
+        "recall": 94.34,
+        "f1_score": 97.09
+      },
+      "seed": {
+        "samples": 44,
+        "precision": 95.56,
+        "recall": 97.73,
+        "f1_score": 96.63
+      }
+    },
+    "confusion_matrix": [
+      [
+        41,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        37,
+        1,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        51,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        43,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        1,
+        50,
+        2
+      ],
+      [
+        0,
+        1,
+        0,
+        0,
+        0,
+        43
+      ]
+    ]
+  }
+}
