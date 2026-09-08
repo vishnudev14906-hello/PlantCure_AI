@@ -1,10 +1,18 @@
 import axios from 'axios';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || (
-  typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')
-    ? ''
-    : 'https://plantcure-ai.vercel.app'
-);
+const getApiBaseUrl = () => {
+  const envUrl = import.meta.env.VITE_API_URL;
+  // If envUrl is accidentally set to the Vercel dashboard URL (vercel.com/...) instead of the actual deployment domain (.vercel.app)
+  if (envUrl && !envUrl.includes('vercel.com/')) {
+    return envUrl;
+  }
+  if (typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1')) {
+    return '';
+  }
+  return 'https://plantcure-ai.vercel.app';
+};
+
+const API_BASE_URL = getApiBaseUrl();
 
 const api = axios.create({
   baseURL: API_BASE_URL,
