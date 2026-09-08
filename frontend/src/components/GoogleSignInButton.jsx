@@ -11,9 +11,9 @@ export const GoogleSignInButton = ({ text = 'Continue with Google', redirectTo =
   const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [showFirebaseConfig, setShowFirebaseConfig] = useState(false);
-  const [apiKey, setApiKey] = useState(import.meta.env.VITE_FIREBASE_API_KEY || '');
-  const [authDomain, setAuthDomain] = useState(import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || '');
-  const [projectId, setProjectId] = useState(import.meta.env.VITE_FIREBASE_PROJECT_ID || '');
+  const [apiKey, setApiKey] = useState(import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyDOZhdzs4-4vGXVwk1I58La-LpdPgaobiM');
+  const [authDomain, setAuthDomain] = useState(import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'plantcure-ai-9c5ac.firebaseapp.com');
+  const [projectId, setProjectId] = useState(import.meta.env.VITE_FIREBASE_PROJECT_ID || 'plantcure-ai-9c5ac');
 
   const handleGoogleClick = async () => {
     // If Firebase is configured with an API key, run native Firebase Google Popup
@@ -41,7 +41,9 @@ export const GoogleSignInButton = ({ text = 'Continue with Google', redirectTo =
         if (error.code === 'auth/popup-closed-by-user') {
           return; // user simply closed the popup
         }
-        if (error.code === 'auth/invalid-api-key' || error.code === 'auth/configuration-not-found') {
+        if (error.code === 'auth/unauthorized-domain') {
+          toast.error(`Domain not authorized: Please add ${window.location.hostname} in Firebase Console -> Authentication -> Settings -> Authorized domains`);
+        } else if (error.code === 'auth/invalid-api-key' || error.code === 'auth/configuration-not-found') {
           setShowFirebaseConfig(true);
         } else {
           toast.error(`Google Sign-In error: ${error.message}`);
