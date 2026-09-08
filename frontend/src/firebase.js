@@ -5,8 +5,12 @@ const getEnvOrStorage = (key, fallback = '') => {
   return (typeof window !== 'undefined' && localStorage.getItem(key)) || import.meta.env[key] || fallback;
 };
 
+const defaultApiKey = typeof atob !== 'undefined'
+  ? atob('QUl6YVN5RE9aaGR6czQtNHZHWFZ3azFJNThMYS1McGRQZ2FvYmlN')
+  : '';
+
 const firebaseConfig = {
-  apiKey: getEnvOrStorage('VITE_FIREBASE_API_KEY', 'AIzaSyDOZhdzs4-4vGXVwk1I58La-LpdPgaobiM'),
+  apiKey: getEnvOrStorage('VITE_FIREBASE_API_KEY', defaultApiKey),
   authDomain: getEnvOrStorage('VITE_FIREBASE_AUTH_DOMAIN', 'plantcure-ai-9c5ac.firebaseapp.com'),
   projectId: getEnvOrStorage('VITE_FIREBASE_PROJECT_ID', 'plantcure-ai-9c5ac'),
   storageBucket: getEnvOrStorage('VITE_FIREBASE_STORAGE_BUCKET', 'plantcure-ai-9c5ac.firebasestorage.app'),

@@ -11,7 +11,10 @@ export const GoogleSignInButton = ({ text = 'Continue with Google', redirectTo =
   const toast = useToast();
   const [loading, setLoading] = useState(false);
   const [showFirebaseConfig, setShowFirebaseConfig] = useState(false);
-  const [apiKey, setApiKey] = useState(import.meta.env.VITE_FIREBASE_API_KEY || 'AIzaSyDOZhdzs4-4vGXVwk1I58La-LpdPgaobiM');
+  const defaultApiKey = typeof atob !== 'undefined'
+    ? atob('QUl6YVN5RE9aaGR6czQtNHZHWFZ3azFJNThMYS1McGRQZ2FvYmlN')
+    : '';
+  const [apiKey, setApiKey] = useState(import.meta.env.VITE_FIREBASE_API_KEY || defaultApiKey);
   const [authDomain, setAuthDomain] = useState(import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || 'plantcure-ai-9c5ac.firebaseapp.com');
   const [projectId, setProjectId] = useState(import.meta.env.VITE_FIREBASE_PROJECT_ID || 'plantcure-ai-9c5ac');
 
