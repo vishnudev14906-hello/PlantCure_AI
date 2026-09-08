@@ -32,6 +32,7 @@ def get_tokens_for_user(user):
 
 
 class RegisterView(APIView):
+    authentication_classes = []
     permission_classes = [AllowAny]
     throttle_classes = [AuthRateThrottle]
 
@@ -49,6 +50,7 @@ class RegisterView(APIView):
 
 
 class LoginView(APIView):
+    authentication_classes = []
     permission_classes = [AllowAny]
     throttle_classes = [AuthRateThrottle]
 
@@ -93,6 +95,7 @@ class GoogleAuthView(APIView):
     Accepts credential (JWT id_token from Google Identity Services) or email + google_id.
     Validates token, finds or creates User, and issues PlantCure JWT tokens.
     """
+    authentication_classes = []
     permission_classes = [AllowAny]
     throttle_classes = [AuthRateThrottle]
 

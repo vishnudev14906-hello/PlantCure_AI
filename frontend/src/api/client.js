@@ -29,8 +29,9 @@ const clearStoredAuth = () => {
 // Request interceptor: Attach JWT Bearer token and optional Gemini Vision API Key
 api.interceptors.request.use(
   (config) => {
+    const isAuthEndpoint = config.url?.includes('/api/auth/');
     const token = getAccessToken();
-    if (token) {
+    if (token && !isAuthEndpoint) {
       config.headers.Authorization = `Bearer ${token}`;
     }
     const geminiKey = localStorage.getItem('plantcure_gemini_api_key');
@@ -62,10 +63,8 @@ api.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // Do not attempt refresh on auth login/register endpoints
-    const isAuthEndpoint = originalRequest.url?.includes('/api/auth/login') ||
-                           originalRequest.url?.includes('/api/auth/register') ||
-                           originalRequest.url?.includes('/api/auth/refresh');
+    // Do not attempt refresh on auth endpoints (login, register, google, refresh)
+    const isAuthEndpoint = originalRequest.url?.includes('/api/auth/');
 
     if (error.response?.status === 401 && !originalRequest._retry && !isAuthEndpoint) {
       if (isRefreshing) {

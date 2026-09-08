@@ -99,6 +99,12 @@ export const AuthProvider = ({ children }) => {
 
   const googleLogin = async (googleData) => {
     try {
+      // Clear any stale tokens before initiating login
+      localStorage.removeItem('plantcure_access_token');
+      localStorage.removeItem('plantcure_refresh_token');
+      localStorage.removeItem('leafcure_access_token');
+      localStorage.removeItem('leafcure_refresh_token');
+
       const response = await api.post('/api/auth/google/', googleData);
       const { user: userData, tokens } = response.data;
 
@@ -111,7 +117,8 @@ export const AuthProvider = ({ children }) => {
       toast.success(`Signed in with Google as ${userData.email}`);
       return { success: true };
     } catch (error) {
-      const detail = error.response?.data?.detail || 'Google sign-in failed.';
+      console.error('googleLogin backend response error:', error);
+      const detail = error.response?.data?.detail || error.response?.data?.message || error.message || 'Google sign-in failed.';
       toast.error(detail);
       return { success: false, error: detail };
     }
